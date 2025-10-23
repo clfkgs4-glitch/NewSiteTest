@@ -1,12 +1,1131 @@
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html lang="pt">
 <head>
-<title>HTML Tutorial</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Burning</title>
+  <link rel="icon" href="https://i.imgur.com/5G4CNRO.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    :root {
+      --bg1: #0b1020;
+      --bg2: #0f1724;
+      --card: #0f172a;
+      --muted: #97a0b5;
+      --accent: #7efc6f;
+      --accent2: #8b5cf6;
+
+      /* Cores das classes */
+      --class-druid: #ff7d0a;
+      --class-paladin: #f58cba;
+      --class-rogue: #fff569;
+      --class-warrior: #c69b6d;
+      --class-mage: #3fc7eb;
+      --class-priest: #ffffff;
+      --class-hunter: #abd473;
+      --class-shaman: #0070de;
+      --class-warlock: #9482c9;
+      --class-deathknight: #c41f3b;
+      --class-monk: #00ff96;
+      --class-demonhunter: #a330c9;
+      --class-evoker: #33937f;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: #e6eef8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent2);
+      margin: 0;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+    .lang-switch img {
+      width: 28px;
+      height: 20px;
+      cursor: pointer;
+      border: 1px solid var(--muted);
+      border-radius: 4px;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    nav a.active {
+      color: var(--accent);
+    }
+
+    .tournament-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
+    }
+
+    .card h2 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+    }
+
+    .highlight {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .highlight:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+    }
+
+    .highlight img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      position: relative;
+      z-index: 2;
+    }
+
+    .crown {
+      position: absolute;
+      top: -8px;
+      left: 52px;
+      font-size: 24px;
+      color: gold;
+      z-index: 10;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      background: var(--card);
+    }
+
+    thead {
+      background: #121b2e;
+    }
+
+    thead th {
+      padding: 12px;
+      text-align: left;
+      color: var(--accent2);
+      font-size: 14px;
+    }
+
+    tbody tr {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: #1e293b;
+    }
+
+    td {
+      padding: 12px;
+      vertical-align: middle;
+    }
+
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: #d1d9ff;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .team:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+    }
+
+    .team-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+
+    .points,
+    .dungeons {
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .points {
+      color: var(--accent);
+    }
+
+    .dungeons {
+      color: var(--accent2);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .footer-socials {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .footer-socials a {
+      color: var(--muted);
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+    .footer-socials a:hover {
+      color: var(--accent);
+    }
+
+    /* Modal */
+    #teamModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000cc;
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    #teamModalContent {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      color: white;
+      position: relative;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    #teamModalContent button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .player-row {
+      margin-bottom: 12px;
+    }
+
+    .status-link {
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Voting Section */
+    #votingSection iframe {
+      border: none;
+      border-radius: 12px;
+    }
+
+    /* Countdown pulse */
+    #countdownText {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--accent2);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 5px var(--accent2), 0 0 10px var(--accent2); }
+      50% { text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent); }
+      100% { text-shadow: 0 0 5px var(--accent2), 0 0 10px var(--accent2); }
+    }
+
+    /* ===== GALERIA ===== */
+    .gallery-img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+    .gallery-img:hover {
+      transform: scale(1.05);
+    }
+    #galleryModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000000cc;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    #galleryModal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #000;
+    }
+    #clipsGallery iframe {
+      border-radius: 12px;
+    }
+
+    /* Colecionáveis */
+    .collectibles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .collectible-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 2px solid rgba(139,92,246,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      padding-bottom: 8px;
+      cursor: pointer;
+    }
+    .collectible-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.75);
+    }
+    .collectible-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+    }
+    .collectible-info {
+      padding: 8px;
+      text-align: center;
+    }
+    .collectible-info h4 {
+      margin: 0;
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .collectible-info p {
+      margin: 6px 0 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* unlock animation */
+    .collectible-card.new {
+      animation: unlock 0.7s cubic-bezier(.2,.9,.2,1) forwards;
+      box-shadow: 0 0 24px rgba(139,92,246,0.9);
+      border-color: var(--accent2);
+    }
+    @keyframes unlock {
+      0% { transform: scale(0.6) rotate(-6deg); opacity: 0; filter: blur(4px); }
+      60% { transform: scale(1.05) rotate(2deg); opacity: 1; filter: blur(0); }
+      100% { transform: scale(1) rotate(0); opacity: 1; filter: none; }
+    }
+    /* ==================== */
+  </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1><i class="fa-solid fa-ranking-star"></i> <span id="titleText">Leaderboard</span></h1>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="lang-switch" aria-hidden>
+          <img src="https://flagcdn.com/w20/pt.png" alt="Português" title="Português" onclick="setLanguage('pt')">
+          <img src="https://flagcdn.com/w20/es.png" alt="Español" title="Español" onclick="setLanguage('es')">
+          <img src="https://flagcdn.com/w20/us.png" alt="English" title="English" onclick="setLanguage('en')">
+        </div>
+        <img src="https://i.imgur.com/5G4CNRO.png" alt="Logo do Torneio" class="tournament-logo" />
+      </div>
+    </header>
 
-<h1>This is a heading</h1>
-<p>This is a paragraph.</p>
+    <!-- Countdown Section -->
+    <section id="countdownSection" class="card" style="margin-bottom:20px; text-align:center;">
+      <h2><i class="fa-solid fa-fire"></i> <span id="countdownTitle">Contagem Regressiva</span></h2>
+      <p id="countdownText">🔥 Próximo Evento em: carregando...</p>
+    </section>
 
+    <nav>
+      <a id="tabLeaderboard" class="active">🏆 Leaderboard</a>
+      <a id="tabHistory">🔍 Histórico</a>
+      <a id="tabVoting">⭐ Votação</a>
+      <a id="tabGallery">🎥 Galeria</a>
+      <a id="tabSponsors">🤝 Patrocinadores</a>
+    </nav>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboardSection">
+      <section class="summary">
+        <div class="card">
+          <h2><i class="fa-solid fa-trophy"></i> <span id="highlightTitle">Destaque do Top 1</span></h2>
+          <div class="highlight" id="highlight"></div>
+        </div>
+        <div class="card">
+          <h2><i class="fa-solid fa-chart-simple"></i> <span id="summaryTitle">Resumo</span></h2>
+          <p id="summary"></p>
+        </div>
+      </section>
+
+      <table id="leaderboard">
+        <thead>
+          <tr>
+            <th id="thPosition">Posição</th>
+            <th id="thTeam">Equipa</th>
+            <th id="thPoints">Pontos</th>
+            <th id="thDungeons">Dungeons</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- History Section -->
+    <section id="historySection" style="display:none;">
+      <div class="card">
+        <h2><i class="fa-solid fa-book"></i> <span id="historyTitle">Histórico e Progresso da Equipa</span></h2>
+        <div id="historyContent">
+          <p id="historyDefault">Selecione uma equipa no leaderboard para ver o histórico aqui.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voting Section -->
+    <section id="votingSection" style="display:none;">
+      <div class="card">
+        <h2><i class="fa-solid fa-star"></i> <span id="votingTitle">Votação MVP</span></h2>
+        <p id="votingText">Vote no jogador mais valioso do torneio!</p>
+        <!-- Embed Google Form -->
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeZ-YT4ImJfUItpHGNavkJXNjViEFErO8icHLCXtw4DZpxeAQ/viewform?embedded=true" 
+                width="100%" 
+                height="800" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0">
+          Carregando…
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Galeria Section -->
+    <section id="gallerySection" style="display:none;">
+      <div class="card">
+        <h2><i class="fa-solid fa-images"></i> <span id="galleryTitle">Galeria de Imagens</span></h2>
+        <div id="imageGallery" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:12px;">
+          <!-- thumbs de exemplo: troca URLs pelas tuas imagens -->
+          <img src="https://i.imgur.com/5G4CNRO.png" alt="Dungeon 1" class="gallery-img" />
+          <img src="https://i.imgur.com/5G4CNRO.png" alt="Dungeon 2" class="gallery-img" />
+          <img src="https://i.imgur.com/5G4CNRO.png" alt="Dungeon 3" class="gallery-img" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h2><i class="fa-solid fa-film"></i> <span id="clipsTitle">Top Clips da Semana</span></h2>
+        <div id="clipsGallery" style="display:grid; gap:20px;">
+          <!-- Exemplo de embed (YouTube). Substitui pelos clipes reais (YouTube/Twitch clips). -->
+          <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Colecionáveis Virtuais -->
+      <div class="card" style="margin-top:20px;">
+        <h2><i class="fa-solid fa-clone"></i> <span id="collectiblesTitle">Colecionáveis Virtuais</span></h2>
+        <p id="collectiblesIntro" style="color:var(--muted); margin-top:6px;">Cada dungeon completada desbloqueia uma carta colecionável para a equipa.</p>
+        <div id="collectiblesGallery" class="collectibles-grid" style="margin-top:12px;"></div>
+      </div>
+    </section>
+
+    <!-- Secção Patrocinadores -->
+    <section id="sponsorsSection" style="display:none;">
+      <div class="card">
+        <h2><i class="fa-solid fa-handshake"></i> <span id="sponsorsTitle">Patrocinadores</span></h2>
+        <p id="sponsorsText" style="color:var(--muted); margin-bottom:12px;">
+          Apoio fundamental para tornar este torneio possível.
+        </p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; text-align:center;">
+          <div>
+            <img src="https://i.imgur.com/5G4CNRO.png" alt="Sponsor 1" style="max-width:100px;">
+            <p style="margin:8px 0 0 0;">Patrocinador 1</p>
+          </div>
+          <div>
+            <img src="https://i.imgur.com/5G4CNRO.png" alt="Sponsor 2" style="max-width:100px;">
+            <p style="margin:8px 0 0 0;">Patrocinador 2</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer">The Burning Tournament ❤️
+      <div class="footer-socials" aria-label="redes sociais">
+        <a href="https://discord.gg/" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://twitch.tv/" target="_blank" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+        <a href="https://youtube.com/" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://example.com/" target="_blank" title="Website"><i class="fa-solid fa-globe"></i></a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="teamModal">
+    <div id="teamModalContent">
+      <button onclick="closeModal()">&times;</button>
+      <h2 id="modalTeamName"></h2>
+      <div id="modalPlayers"></div>
+    </div>
+  </div>
+
+  <!-- Modal da Galeria -->
+  <div id="galleryModal"><img id="galleryModalImg" src="" alt="Preview"></div>
+
+  <script>
+    // --- Dados originais das teams (mantidos) ---
+    const teams = [
+      {
+        name: 'Feral Vanguard',
+        points: 0,
+        dungeons: 0,
+        image: 'https://i.imgur.com/5G4CNRO.png',
+        players: [
+          { name: 'Feralino', class: 'Druid', spec: 'Feral', io: 0, live: true, stream: 'https://twitch.tv/feralino' },
+          { name: 'Tankzord', class: 'Rogue', spec: 'Assassination', io: 0, live: false },
+          { name: 'Tankzord', class: 'Warrior', spec: 'Protection', io: 0, live: false },
+          { name: 'Tankzord', class: 'Warlock', spec: 'Destruction', io: 0, live: true, stream: 'https://twitch.tv/feralino'},
+          { name: 'Tankzord', class: 'Shaman', spec: 'Elemental', io: 0, live: false }
+        ],
+        history: [
+          { dungeon: 'Halls of Valor', level: 15, time: '32:45' },
+          { dungeon: 'Freehold', level: 14, time: '28:10' }
+        ]
+      },
+      {
+        name: 'Lightforged Remnant',
+        points: 0,
+        dungeons: 0,
+        image: 'https://i.imgur.com/5G4CNRO.png',
+        players: [
+          { name: 'Fugitivo', class: 'Rogue', spec: 'Subtlety', io: 0, live: false, stream: 'https://www.twitch.tv/fugitivotv' },
+          { name: 'Tankzord', class: 'Demonhunter', spec: 'Havoc', io: 0, live: false },
+          { name: 'Tankzord', class: 'Evoker', spec: 'Augmentation', io: 0, live: false },
+          { name: 'Tankzord', class: 'Deathknight', spec: 'Blood', io: 0, live: false },
+          { name: 'Tankzord', class: 'Priest', spec: 'Holy', io: 0, live: false }
+        ],
+        history: [
+          { dungeon: 'Temple of the Jade Serpent', level: 13, time: '29:50' }
+        ]
+      },
+      {
+        name: 'Arcane Dominion',
+        points: 0,
+        dungeons: 0,
+        image: 'https://i.imgur.com/5G4CNRO.png',
+        players: [
+          { name: 'Blinkz', class: 'Mage', spec: 'Arcane', io: 0, live: false }
+        ],
+        history: []
+      }
+    ];
+
+    // Traduções (PT, ES, EN) - acrescentei chaves para Gallery/Clips/Colecionáveis/Patrocinadores
+    const translations = {
+      pt: {
+        title: 'Leaderboard',
+        countdown: 'Contagem Regressiva',
+        nextEvent: '🔥 Próximo Evento em:',
+        eventLive: '🚀 O evento está AO VIVO!',
+        leaderboard: 'Leaderboard',
+        history: 'Histórico',
+        voting: 'Votação',
+        gallery: 'Galeria',
+        galleryTitle: 'Galeria de Imagens',
+        clipsTitle: 'Top Clips da Semana',
+        collectiblesTitle: 'Colecionáveis Virtuais',
+        collectiblesIntro: 'Cada dungeon completada desbloqueia uma carta colecionável para a equipa.',
+        highlight: 'Destaque do Top 1',
+        summary: 'Resumo',
+        thPosition: 'Posição',
+        thTeam: 'Equipa',
+        thPoints: 'Pontos',
+        thDungeons: 'Dungeons',
+        historyTitle: 'Histórico e Progresso da Equipa',
+        historyDefault: 'Selecione uma equipa no leaderboard para ver o histórico aqui.',
+        dungeonColumn: 'Dungeon',
+        levelColumn: 'Nível',
+        timeColumn: 'Tempo',
+        noRuns: 'ainda não tem runs registradas.',
+        noPlayers: 'Sem jogadores cadastrados.',
+        votingTitle: 'Votação MVP',
+        votingText: 'Vote no jogador mais valioso do torneio!',
+        footer: 'The Burning Tournament ❤️',
+        live: '🔴 Ao Vivo',
+        offline: '⚪ Offline',
+        totalTeams: 'Total Equipas',
+        totalDungeons: 'Total Dungeons',
+        sponsors: 'Patrocinadores',
+        sponsorsText: 'Apoio fundamental para tornar este torneio possível.'
+      },
+      es: {
+        title: 'Clasificación',
+        countdown: 'Cuenta Regresiva',
+        nextEvent: '🔥 Próximo Evento en:',
+        eventLive: '🚀 ¡El evento está EN VIVO!',
+        leaderboard: 'Clasificación',
+        history: 'Historial',
+        voting: 'Votación',
+        gallery: 'Galería',
+        galleryTitle: 'Galería de Imágenes',
+        clipsTitle: 'Mejores Clips de la Semana',
+        collectiblesTitle: 'Coleccionables Virtuales',
+        collectiblesIntro: 'Cada mazmorra completada desbloquea una carta coleccionable para el equipo.',
+        highlight: 'Destacado del Top 1',
+        summary: 'Resumen',
+        thPosition: 'Posición',
+        thTeam: 'Equipo',
+        thPoints: 'Puntos',
+        thDungeons: 'Mazmorras',
+        historyTitle: 'Historial y Progreso del Equipo',
+        historyDefault: 'Seleccione un equipo en la clasificación para ver el historial aquí.',
+        dungeonColumn: 'Mazmorra',
+        levelColumn: 'Nivel',
+        timeColumn: 'Tiempo',
+        noRuns: 'aún no tiene runs registradas.',
+        noPlayers: 'Sin jugadores registrados.',
+        votingTitle: 'Votación MVP',
+        votingText: '¡Vota por el jugador más valioso del torneo!',
+        footer: 'The Burning Tournament ❤️',
+        live: '🔴 En Vivo',
+        offline: '⚪ Desconectado',
+        totalTeams: 'Equipos Totales',
+        totalDungeons: 'Mazmorras Totales',
+        sponsors: 'Patrocinadores',
+        sponsorsText: 'Apoyo fundamental para hacer posible este torneo.'
+      },
+      en: {
+        title: 'Leaderboard',
+        countdown: 'Countdown',
+        nextEvent: '🔥 Next Event in:',
+        eventLive: '🚀 The event is LIVE!',
+        leaderboard: 'Leaderboard',
+        history: 'History',
+        voting: 'Voting',
+        gallery: 'Gallery',
+        galleryTitle: 'Image Gallery',
+        clipsTitle: 'Top Clips of the Week',
+        collectiblesTitle: 'Virtual Collectibles',
+        collectiblesIntro: 'Each completed dungeon unlocks a collectible card for the team.',
+        highlight: 'Top 1 Highlight',
+        summary: 'Summary',
+        thPosition: 'Position',
+        thTeam: 'Team',
+        thPoints: 'Points',
+        thDungeons: 'Dungeons',
+        historyTitle: 'Team History & Progress',
+        historyDefault: 'Select a team from the leaderboard to view history here.',
+        dungeonColumn: 'Dungeon',
+        levelColumn: 'Level',
+        timeColumn: 'Time',
+        noRuns: 'has no runs recorded yet.',
+        noPlayers: 'No players registered.',
+        votingTitle: 'MVP Voting',
+        votingText: 'Vote for the most valuable player of the tournament!',
+        footer: 'The Burning Tournament ❤️',
+        live: '🔴 Live',
+        offline: '⚪ Offline',
+        totalTeams: 'Total Teams',
+        totalDungeons: 'Total Dungeons',
+        sponsors: 'Sponsors',
+        sponsorsText: 'Essential support to make this tournament possible.'
+      }
+    };
+
+    // Estado de idioma (tenta recuperar do localStorage)
+    let currentLang = localStorage.getItem('tb_lang') || 'pt';
+
+    // Função que aplica traduções e atualiza textos do UI
+    function setLanguage(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('tb_lang', lang);
+      const t = translations[lang];
+
+      // Header / Titles
+      document.getElementById('titleText').innerText = t.title;
+      document.getElementById('countdownTitle').innerText = t.countdown;
+
+      // Nav
+      document.getElementById('tabLeaderboard').innerHTML = '🏆 ' + t.leaderboard;
+      document.getElementById('tabHistory').innerHTML = '🔍 ' + t.history;
+      document.getElementById('tabVoting').innerHTML = '⭐ ' + t.voting;
+      const tabGalleryEl = document.getElementById('tabGallery');
+      if (tabGalleryEl) tabGalleryEl.innerHTML = '🎥 ' + t.gallery;
+      const tabSponsorsEl = document.getElementById('tabSponsors');
+      if (tabSponsorsEl) tabSponsorsEl.innerHTML = '🤝 ' + t.sponsors;
+
+      // Sections
+      document.getElementById('highlightTitle').innerText = t.highlight;
+      document.getElementById('summaryTitle').innerText = t.summary;
+
+      // Table headings
+      document.getElementById('thPosition').innerText = t.thPosition;
+      document.getElementById('thTeam').innerText = t.thTeam;
+      document.getElementById('thPoints').innerText = t.thPoints;
+      document.getElementById('thDungeons').innerText = t.thDungeons;
+
+      // History / Voting / Footer
+      document.getElementById('historyTitle').innerText = t.historyTitle;
+      document.getElementById('historyDefault').innerText = t.historyDefault;
+      document.getElementById('votingTitle').innerText = t.votingTitle;
+      document.getElementById('votingText').innerText = t.votingText;
+      document.getElementById('footer').innerText = t.footer;
+
+      // Galeria textos (se existirem)
+      const galleryTitleEl = document.getElementById('galleryTitle');
+      if (galleryTitleEl) galleryTitleEl.innerText = t.galleryTitle;
+      const clipsTitleEl = document.getElementById('clipsTitle');
+      if (clipsTitleEl) clipsTitleEl.innerText = t.clipsTitle;
+
+      // Colecionáveis
+      const collectiblesTitleEl = document.getElementById('collectiblesTitle');
+      if (collectiblesTitleEl) collectiblesTitleEl.innerText = t.collectiblesTitle;
+      const collectiblesIntroEl = document.getElementById('collectiblesIntro');
+      if (collectiblesIntroEl) collectiblesIntroEl.innerText = t.collectiblesIntro;
+
+      // Patrocinadores
+      const sponsorsTitleEl = document.getElementById('sponsorsTitle');
+      if (sponsorsTitleEl) sponsorsTitleEl.innerText = t.sponsors;
+      const sponsorsTextEl = document.getElementById('sponsorsText');
+      if (sponsorsTextEl) sponsorsTextEl.innerText = t.sponsorsText;
+
+      // Re-render dynamic parts (summary, highlight, history if open)
+      render();
+      renderCollectibles();
+      updateCountdown();
+    }
+
+    // Countdown
+    const nextEventDate = new Date("2025-10-27T17:00:00"); // Ajusta a data aqui
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = nextEventDate - now;
+      const countdownText = document.getElementById('countdownText');
+      const t = translations[currentLang];
+
+      if (diff <= 0) {
+        countdownText.innerHTML = t.eventLive;
+        countdownText.style.color = "var(--accent)";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      // Usa os textos traduzidos e atualiza cada segundo
+      const nextEventLabel = t.nextEvent || translations['pt'].nextEvent;
+      countdownText.innerHTML = `${nextEventLabel} ${days} dias, ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Render do leaderboard
+    function render() {
+      const tbodyRef = document.querySelector('#leaderboard tbody');
+      if (!tbodyRef) return;
+      tbodyRef.innerHTML = '';
+      teams.sort((a, b) => b.points - a.points);
+
+      teams.forEach((t, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>#${i + 1}</td>
+          <td class="team team-click" data-index="${i}">
+            <img src="${t.image}" alt="${t.name}" class="team-img" />
+            ${t.name}
+          </td>
+          <td><div class="points"><i class="fa-solid fa-star"></i> ${t.points}</div></td>
+          <td><div class="dungeons"><i class="fa-solid fa-dungeon"></i> ${t.dungeons}</div></td>
+        `;
+        tbodyRef.appendChild(row);
+      });
+
+      // Adiciona listeners para abrir modal de equipa
+      document.querySelectorAll('.team-click').forEach(el => {
+        el.addEventListener('click', () => {
+          const index = el.getAttribute('data-index');
+          openTeamModal(teams[index]);
+          renderHistory(teams[index]);
+          // Switch to history tab automatically
+          const tabHistoryEl = document.getElementById('tabHistory');
+          if (tabHistoryEl) tabHistoryEl.click();
+        });
+      });
+
+      // Atualiza destaque (top1)
+      const top = teams[0];
+      if (top) {
+        const highlight = document.getElementById('highlight');
+        highlight.innerHTML = `
+          <div style="position: relative;">
+            <img src="${top.image}" alt="${top.name}" />
+            <div class="crown"><i class="fa-solid fa-crown"></i></div>
+          </div>
+          <div>
+            <div><strong>${top.name}</strong> <span style="color:gold;">#1</span></div>
+            <div class="points"><i class="fa-solid fa-star"></i> ${top.points}</div>
+            <div class="dungeons"><i class="fa-solid fa-dungeon"></i> ${top.dungeons}</div>
+          </div>
+        `;
+      } else {
+        const highlight = document.getElementById('highlight');
+        if (highlight) highlight.innerHTML = `<div>${translations[currentLang].noPlayers}</div>`;
+      }
+
+      // Summary
+      const totalTeams = teams.length;
+      const totalDungeons = teams.reduce((a, b) => a + (b.dungeons || 0), 0);
+      const t = translations[currentLang];
+      const summaryEl = document.getElementById('summary');
+      if (summaryEl) summaryEl.innerText = `${t.totalTeams}: ${totalTeams}\n${t.totalDungeons}: ${totalDungeons}`;
+
+      // Atualiza colecionáveis também
+      renderCollectibles();
+    }
+
+    function renderHistory(team) {
+      const container = document.getElementById('historyContent');
+      const t = translations[currentLang];
+      if (!team.history || team.history.length === 0) {
+        container.innerHTML = `<p>${team.name} ${t.noRuns}</p>`;
+      } else {
+        const rows = team.history.map(h => `<tr><td>${h.dungeon}</td><td>+${h.level}</td><td>${h.time}</td></tr>`).join('');
+        container.innerHTML = `
+          <h3>${team.name}</h3>
+          <table>
+            <thead><tr><th>${t.dungeonColumn}</th><th>${t.levelColumn}</th><th>${t.timeColumn}</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+      }
+    }
+
+    function openTeamModal(team) {
+      const t = translations[currentLang];
+      document.getElementById('modalTeamName').innerText = team.name;
+      const container = document.getElementById('modalPlayers');
+      container.innerHTML = '';
+
+      if (!team.players || team.players.length === 0) {
+        container.innerHTML = `<p>${t.noPlayers}</p>`;
+      } else {
+        team.players.forEach(player => {
+          const statusText = player.live ? t.live : t.offline;
+          const status = player.stream
+            ? `<a href="${player.stream}" target="_blank" class="status-link">${statusText}</a>`
+            : statusText;
+
+          // tenta usar a cor da classe definida em :root, senão branco
+          const colorVarName = `--class-${player.class ? player.class.toLowerCase() : ''}`;
+          const styleColor = getComputedStyle(document.documentElement).getPropertyValue(colorVarName) || 'white';
+
+          const div = document.createElement('div');
+          div.className = 'player-row';
+          div.style.color = styleColor.trim();
+          div.innerHTML = `
+            <div class="player-info">
+              <strong>${player.name}</strong> - ${player.class} (${player.spec})<br>
+              IO: <span style="color: var(--accent)">${player.io}</span> | Status: ${status}
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      document.getElementById('teamModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('teamModal').style.display = 'none';
+    }
+
+    // Tabs
+    const tabLeaderboard = document.getElementById('tabLeaderboard');
+    const tabHistory = document.getElementById('tabHistory');
+    const tabVoting = document.getElementById('tabVoting');
+    const tabGallery = document.getElementById('tabGallery');
+    const tabSponsors = document.getElementById('tabSponsors');
+
+    const leaderboardSection = document.getElementById('leaderboardSection');
+    const historySection = document.getElementById('historySection');
+    const votingSection = document.getElementById('votingSection');
+    const gallerySection = document.getElementById('gallerySection');
+    const sponsorsSection = document.getElementById('sponsorsSection');
+
+    function clearActiveTabs() {
+      document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+      if (leaderboardSection) leaderboardSection.style.display = "none";
+      if (historySection) historySection.style.display = "none";
+      if (votingSection) votingSection.style.display = "none";
+      if (gallerySection) gallerySection.style.display = "none";
+      if (sponsorsSection) sponsorsSection.style.display = "none";
+    }
+
+    if (tabLeaderboard) {
+      tabLeaderboard.addEventListener("click", () => {
+        clearActiveTabs();
+        tabLeaderboard.classList.add("active");
+        if (leaderboardSection) leaderboardSection.style.display = "block";
+      });
+    }
+    if (tabHistory) {
+      tabHistory.addEventListener("click", () => {
+        clearActiveTabs();
+        tabHistory.classList.add("active");
+        if (historySection) historySection.style.display = "block";
+      });
+    }
+    if (tabVoting) {
+      tabVoting.addEventListener("click", () => {
+        clearActiveTabs();
+        tabVoting.classList.add("active");
+        if (votingSection) votingSection.style.display = "block";
+      });
+    }
+    if (tabGallery) {
+      tabGallery.addEventListener("click", () => {
+        clearActiveTabs();
+        tabGallery.classList.add("active");
+        if (gallerySection) gallerySection.style.display = "block";
+      });
+    }
+    if (tabSponsors) {
+      tabSponsors.addEventListener("click", () => {
+        clearActiveTabs();
+        tabSponsors.classList.add("active");
+        if (sponsorsSection) sponsorsSection.style.display = "block";
+      });
+    }
+
+    // Modal para imagens da galeria
+    function setupGalleryImageClicks() {
+      document.querySelectorAll('.gallery-img').forEach(img => {
+        img.addEventListener('click', () => {
+          const modal = document.getElementById('galleryModal');
+          const modalImg = document.getElementById('galleryModalImg');
+          if (modal && modalImg) {
+            modalImg.src = img.src;
+            modal.style.display = 'flex';
+          }
+        });
+      });
+    }
+
+    const galleryModalEl = document.getElementById('galleryModal');
+    if (galleryModalEl) {
+      galleryModalEl.addEventListener('click', () => {
+        galleryModalEl.style.display = 'none';
+        const modalImg = document.getElementById('galleryModalImg');
+        if (modalImg) modalImg.src = '';
+      });
+    }
+
+    // ---------------------------
+    // Colecionáveis: lógica JS
+    // ---------------------------
+    const COLLECTIBLES_KEY = 'tb_seen_collectibles_v1';
+
+    function generateCollectibleKey(teamName, dungeon, level) {
+      return `${teamName}::${dungeon}::${level}`;
+    }
+
+    function loadSeenCollectibles() {
+      try {
+        const raw = localStorage.getItem(COLLECTIBLES_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveSeenCollectibles(arr) {
+      try {
+        localStorage.setItem(COLLECTIBLES_KEY, JSON.stringify(arr));
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    // Renderiza todas as cartas baseadas nas runs (history)
+    function renderCollectibles() {
+      const container = document.getElementById('collectiblesGallery');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // seen keys para não animar sempre
+      const seen = loadSeenCollectibles();
+      const newlySeen = []; // keys que vamos marcar como vistas após animação
+
+      teams.forEach(team => {
+        if (!team.history || team.history.length === 0) return;
+        team.history.forEach(run => {
+          const key = generateCollectibleKey(team.name, run.dungeon, run.level);
+          const card = document.createElement('div');
+          card.className = 'collectible-card';
+          // se for novo (ainda não visto), adiciona classe 'new' para animação
+          if (!seen.includes(key)) {
+            card.classList.add('new');
+            newlySeen.push(key);
+          }
+
+          // Imagem placeholder (podes trocar pela imagem real por dungeon)
+          const imgUrl = 'https://i.imgur.com/5G4CNRO.png';
+
+          card.innerHTML = `
+            <img src="${imgUrl}" alt="${run.dungeon}" />
+            <div class="collectible-info">
+              <h4>${run.dungeon}</h4>
+              <p class="collectible-level">+${run.level} • <small style="color:var(--muted)">${team.name}</small></p>
+            </div>
+          `;
+
+          // click abre preview maior (reusa galleryModal)
+          card.addEventListener('click', () => {
+            const modal = document.getElementById('galleryModal');
+            const modalImg = document.getElementById('galleryModalImg');
+            modalImg.src = imgUrl;
+            modal.style.display = 'flex';
+          });
+
+          container.appendChild(card);
+        });
+      });
+
+      // Depois de renderizar, marca os novos como vistos para a próxima vez
+      if (newlySeen.length > 0) {
+        const union = Array.from(new Set([...seen, ...newlySeen]));
+        saveSeenCollectibles(union);
+        // remove classe 'new' após animação (mantemos efeito visual por um tempo)
+        setTimeout(() => {
+          document.querySelectorAll('.collectible-card.new').forEach(el => el.classList.remove('new'));
+        }, 1200);
+      }
+    }
+
+    // Inicialização: aplicar idioma guardado / padrão e arrancar UI
+    setLanguage(currentLang);
+
+    // Garanto que o countdown e o render corram logo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Roda o render principal (cria leaderboard/highlight e chama renderCollectibles)
+    render();
+    setupGalleryImageClicks();
+    renderCollectibles();
+
+    // Abre por defeito o leaderboard
+    if (tabLeaderboard) {
+      clearActiveTabs();
+      tabLeaderboard.classList.add('active');
+      if (leaderboardSection) leaderboardSection.style.display = 'block';
+    }
+  </script>
 </body>
 </html>
