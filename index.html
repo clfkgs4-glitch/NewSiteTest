@@ -50,17 +50,14 @@
     }
 
     @keyframes changeColor {
-      0% {
-        filter: hue-rotate(0deg);
-      }
-      100% {
-        filter: hue-rotate(360deg);
-      }
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
     }
 
     .loader {
       display: flex;
     }
+
     .loader .dot {
       width: 20px;
       height: 20px;
@@ -72,24 +69,20 @@
       animation: animateDot 2s linear infinite;
       animation-delay: calc(0.1s * var(--i));
     }
+
     @keyframes animateDot {
-      0% {
-        transform: scale(0.1);
-      }
-      10% {
-        transform: scale(1);
-      }
-      50%,
-      100% {
-        transform: scale(0.1);
-      }
+      0% { transform: scale(0.1); }
+      10% { transform: scale(1); }
+      50%, 100% { transform: scale(0.1); }
     }
+
     .loading-screen h2 {
       color: var(--primary);
       font-weight: 500;
       margin-top: 20px;
       letter-spacing: 5px;
     }
+
     .fade-out {
       opacity: 0;
       transition: opacity 1s ease;
@@ -107,16 +100,11 @@
       height: 100%;
       z-index: -1;
     }
+
     @keyframes gradientMove {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* === Logo === */
@@ -130,6 +118,7 @@
       gap: 15px;
       margin-bottom: 20px;
     }
+
     .logo span {
       color: var(--primary);
       text-shadow: 0 0 20px var(--primary);
@@ -142,13 +131,10 @@
       filter: drop-shadow(0 0 10px var(--primary));
       animation: glow 2s ease-in-out infinite alternate;
     }
+
     @keyframes glow {
-      from {
-        filter: drop-shadow(0 0 5px var(--primary));
-      }
-      to {
-        filter: drop-shadow(0 0 20px var(--primary));
-      }
+      from { filter: drop-shadow(0 0 5px var(--primary)); }
+      to { filter: drop-shadow(0 0 20px var(--primary)); }
     }
 
     /* === Hexagon Menu === */
@@ -164,14 +150,8 @@
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hexagon-item {
@@ -180,11 +160,10 @@
       position: relative;
       transform: rotate(30deg);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
-      /* Removendo sombra externa e outline */
       outline: none;
       box-shadow: none;
     }
-    /* Zoom suave no hover */
+
     .hexagon-item:hover {
       transform: rotate(30deg) scale(1.05);
       cursor: pointer;
@@ -203,7 +182,6 @@
       outline: none;
     }
 
-    /* Hexágono com borda */
     .hex-content svg path {
       fill: transparent;
       stroke: #1e2530;
@@ -211,10 +189,9 @@
       transition: stroke 0.3s ease;
     }
 
-    /* Apenas borda verde sem brilho no hover */
     .hexagon-item:hover svg path {
       stroke: var(--primary);
-      filter: none; /* Remove brilho */
+      filter: none;
     }
 
     .hex-content-inner {
@@ -244,38 +221,27 @@
     }
 
     /* === Efeito Fade In === */
-    .hidden {
-      display: none;
-      opacity: 0;
-    }
-    .fade-in {
-      animation: fadeIn 1s ease forwards;
-    }
+    .hidden { display: none; opacity: 0; }
+    .fade-in { animation: fadeIn 1s ease forwards; }
+
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* === Layout === */
-    .pt-table {
-      display: table;
-      width: 100%;
-      height: 100vh;
-    }
-    .pt-tablecell {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: center;
-      position: relative;
+    .pt-table { display: table; width: 100%; height: 100vh; }
+    .pt-tablecell { display: table-cell; vertical-align: middle; text-align: center; position: relative; }
+    .mt20 { margin-top: 20px; }
+
+    /* === Desativar cliques no CS e League === */
+    .hexagon-item.disabled a {
+      pointer-events: none;
+      opacity: 0.4;
+      filter: grayscale(100%);
+      cursor: not-allowed;
     }
 
-    .mt20 {
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
@@ -311,7 +277,8 @@
           </div>
 
           <div class="hexagon-menu clear">
-            <div class="hexagon-item" tabindex="0">
+            <!-- CS (desativado) -->
+            <div class="hexagon-item disabled" tabindex="0">
               <a class="hex-content" href="csmenu.html" aria-label="CS Tournament">
                 <span class="hex-content-inner">
                   <span class="icon"><i class="fa-solid fa-crosshairs"></i></span>
@@ -323,6 +290,7 @@
               </a>
             </div>
 
+            <!-- Warcraft (ativo) -->
             <div class="hexagon-item" tabindex="0">
               <a class="hex-content" href="wowmenu.html" aria-label="Warcraft Tournament">
                 <span class="hex-content-inner">
@@ -335,7 +303,8 @@
               </a>
             </div>
 
-            <div class="hexagon-item" tabindex="0">
+            <!-- League (desativado) -->
+            <div class="hexagon-item disabled" tabindex="0">
               <a class="hex-content" href="leaguemenu.html" aria-label="League Tournament">
                 <span class="hex-content-inner">
                   <span class="icon"><i class="fa-solid fa-magic"></i></span>
@@ -366,4 +335,3 @@
   </script>
 </body>
 </html>
-
