@@ -1,12 +1,334 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Page Title</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Inicial</title>
+
+  <!-- Fonte futurista -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* === Paleta Neon e Estilo Base === */
+    :root {
+      --primary: #00ff88;
+      --secondary: #0a0a0a;
+      --text: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: var(--secondary);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* === Loading === */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #001300;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: changeColor 5s linear infinite;
+    }
+
+    @keyframes changeColor {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    .loader {
+      display: flex;
+    }
+    .loader .dot {
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary);
+      border-radius: 50%;
+      margin: 10px;
+      transform: scale(0.1);
+      animation: animateDot 2s linear infinite;
+      animation-delay: calc(0.1s * var(--i));
+    }
+    @keyframes animateDot {
+      0% {
+        transform: scale(0.1);
+      }
+      10% {
+        transform: scale(1);
+      }
+      50%,
+      100% {
+        transform: scale(0.1);
+      }
+    }
+    .loading-screen h2 {
+      color: var(--primary);
+      font-weight: 500;
+      margin-top: 20px;
+      letter-spacing: 5px;
+    }
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    /* === Fundo Animado === */
+    .page-home .overlay {
+      background: linear-gradient(-45deg, #001f1f, #002200, #000, #001300);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* === Logo === */
+    .logo {
+      font-size: 64px;
+      color: white;
+      text-transform: uppercase;
+    }
+    .logo span {
+      color: var(--primary);
+      text-shadow: 0 0 20px var(--primary);
+    }
+
+    /* === Hexagon Menu === */
+    .hexagon-menu {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s ease-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hexagon-item {
+      width: 200px;
+      height: 173px;
+      position: relative;
+      transform: rotate(30deg);
+      transition: 0.4s;
+    }
+
+    .hex-content {
+      color: white;
+      display: block;
+      height: 180px;
+      width: 156px;
+      margin: 0 auto;
+      text-align: center;
+      transform: rotate(-30deg);
+      transition: 0.3s;
+      position: relative;
+    }
+
+    /* Hexágono com borda */
+    .hex-content svg path {
+      fill: transparent;
+      stroke: #1e2530;
+      stroke-width: 4;
+      transition: all 0.3s ease;
+    }
+
+    /* Apenas borda verde sem brilho no hover */
+    .hexagon-item:hover svg path {
+      stroke: var(--primary);
+      filter: none; /* Remove brilho */
+    }
+
+    .hex-content-inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .icon i {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: var(--primary);
+      transition: color 0.3s ease;
+    }
+
+    .hexagon-item:hover .icon i {
+      color: white;
+    }
+
+    .title {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* === Efeito Fade In === */
+    .hidden {
+      display: none;
+      opacity: 0;
+    }
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* === Layout === */
+    .pt-table {
+      display: table;
+      width: 100%;
+      height: 100vh;
+    }
+    .pt-tablecell {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      position: relative;
+    }
+
+    .mt20 {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <section class="loading-screen">
+    <div class="loader">
+      <div class="dot" style="--i:0"></div>
+      <div class="dot" style="--i:1"></div>
+      <div class="dot" style="--i:2"></div>
+      <div class="dot" style="--i:3"></div>
+      <div class="dot" style="--i:4"></div>
+      <div class="dot" style="--i:5"></div>
+      <div class="dot" style="--i:6"></div>
+      <div class="dot" style="--i:7"></div>
+      <div class="dot" style="--i:8"></div>
+      <div class="dot" style="--i:9"></div>
+    </div>
+    <h2>Carregando...</h2>
+  </section>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+  <!-- Menu Principal -->
+  <main class="site-wrapper hidden">
+    <div class="pt-table desktop-768">
+      <div class="pt-tablecell page-home relative">
+        <div class="overlay"></div>
 
+        <div class="container">
+          <div class="page-title home text-center">
+            <h1 class="logo">The<span>Burning</span></h1>
+          </div>
+
+          <div class="hexagon-menu clear">
+            <div class="hexagon-item">
+              <a class="hex-content" href="jogo1.html">
+                <span class="hex-content-inner">
+                  <span class="icon"><i class="fa-solid fa-crosshairs"></i></span>
+                  <span class="title">CS</span>
+                </span>
+                <svg viewBox="0 0 173.205 200">
+                  <path d="M86.6 0L173.2 50V150L86.6 200L0 150V50Z" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="hexagon-item">
+              <a class="hex-content" href="jogo2.html">
+                <span class="hex-content-inner">
+                  <span class="icon"><i class="fa-solid fa-trophy"></i></span>
+                  <span class="title">Warcraft</span>
+                </span>
+                <svg viewBox="0 0 173.205 200">
+                  <path d="M86.6 0L173.2 50V150L86.6 200L0 150V50Z" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="hexagon-item">
+              <a class="hex-content" href="jogo3.html">
+                <span class="hex-content-inner">
+                  <span class="icon"><i class="fa-solid fa-magic"></i></span>
+                  <span class="title">League</span>
+                </span>
+                <svg viewBox="0 0 173.205 200">
+                  <path d="M86.6 0L173.2 50V150L86.6 200L0 150V50Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Exibe o menu após 10 segundos e aplica efeito fade-out no loading
+    setTimeout(() => {
+      const loading = document.querySelector('.loading-screen');
+      loading.classList.add('fade-out');
+      setTimeout(() => {
+        loading.style.display = 'none';
+        document.querySelector('.site-wrapper').classList.remove('hidden');
+        document.querySelector('.site-wrapper').classList.add('fade-in');
+      }, 1000);
+    }, 10000);
+  </script>
 </body>
 </html>
