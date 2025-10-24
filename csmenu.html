@@ -3,187 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Torneio CS2 - Leaderboard</title>
+<title>The Burning - Leaderboard</title>
 <style>
   /* ======== BASE ======== */
   body {
-    background: radial-gradient(circle at center, #0b1218 20%, #06090c 100%);
+    background: linear-gradient(135deg, #0f1923 0%, #11171f 100%);
     font-family: 'Poppins', sans-serif;
-    color: #bfc9d1;
+    color: #fff;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    overflow-x: auto;
   }
 
   h1 {
     text-align: center;
-    margin: 40px 0 60px;
-    font-size: 2.8rem;
-    color: #00d9a3;
-    letter-spacing: 2px;
-    text-shadow: 0 0 25px rgba(0,217,163,0.6);
+    margin: 20px 0;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
   }
 
-  /* ======== BRACKET CONTAINER ======== */
+  h1 span:first-child {
+    color: white;
+  }
+
+  h1 span:last-child {
+    color: #00d9a3;
+    text-shadow: 0 0 15px #00d9a3;
+  }
+
   .bracket {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 120px;
-    padding: 20px 40px 80px;
-    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding: 60px 20px;
+    position: relative;
+    gap: 60px;
   }
 
   .round {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;
-    text-align: center;
+    position: relative;
   }
 
   .round-title {
-    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
     text-transform: uppercase;
     color: #00d9a3;
-    margin-bottom: 10px;
-    font-weight: 600;
+    font-size: 1.2rem;
     letter-spacing: 1px;
-    border-bottom: 2px solid rgba(0,255,198,0.15);
-    padding-bottom: 6px;
   }
 
-  /* ======== MATCH CARDS (GLASS EFFECT) ======== */
+  /* ======== MATCH CARDS ======== */
   .match {
-    background: rgba(20, 25, 30, 0.6);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    width: 240px;
-    padding: 18px 16px;
-    border: 1px solid rgba(0,255,198,0.15);
-    box-shadow: 0 0 10px rgba(0,255,198,0.05);
-    transition: all 0.3s ease;
+    padding: 15px 20px;
+    margin: 20px 0;
+    width: 220px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .match:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 0 25px rgba(0,255,198,0.25);
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0,217,163,0.3);
   }
 
   .team {
+    padding: 8px 0;
+    font-weight: 500;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 10px;
-    margin: 5px 0;
-    border-radius: 8px;
-    font-weight: 500;
-    color: #bfc9d1;
-    transition: 0.3s;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
   }
 
-  .team:hover {
-    background: rgba(0,255,198,0.05);
-  }
-
-  /* ======== WINNER NEON (SUAVE) ======== */
   .winner {
-    color: #45f9a0;
+    border: 2px solid #00d9a3;
+    color: #00d9a3;
     font-weight: 700;
-    text-shadow: 0 0 6px rgba(69,249,160,0.5);
-  }
-
-  /* ======== FINAL WINNER DOURADO ======== */
-  .final .winner {
-    color: #ffd700;
-    text-shadow:
-      0 0 8px rgba(255,215,0,0.7),
-      0 0 20px rgba(255,215,0,0.5),
-      0 0 30px rgba(255,215,0,0.3);
+    background: rgba(0,217,163,0.1);
+    box-shadow: 0 0 10px #00d9a3;
   }
 
   .score {
     font-size: 0.9rem;
-    color: #9faab3;
+    color: #bbb;
     font-weight: 600;
   }
 
   .bestof {
     font-size: 0.8rem;
     color: #00d9a3;
-    margin-top: 10px;
-    text-align: center;
+    margin-top: 4px;
     text-transform: uppercase;
-    opacity: 0.6;
     letter-spacing: 1px;
+    opacity: 0.8;
   }
 
-  /* ======== RESPONSIVIDADE ======== */
-  @media (max-width: 1300px) {
-    .bracket {
-      gap: 80px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+  /* ======== CAMPEÃO FINAL ======== */
+  .champion {
+    border: 2px solid gold !important;
+    color: gold !important;
+    box-shadow: 0 0 20px gold, inset 0 0 15px gold;
+    font-size: 1.1rem;
   }
 
+  /* ======== RESPONSIVO ======== */
   @media (max-width: 900px) {
     .bracket {
       flex-direction: column;
       align-items: center;
       gap: 50px;
     }
+    .round {
+      margin: 0;
+    }
   }
 </style>
 </head>
 <body>
-  <h1>🏆 Torneio CS2 - Eliminatórias</h1>
+  <h1><span>The Burning</span> <span>Eliminatórias</span></h1>
 
   <div class="bracket">
-
-    <!-- OITAVAS -->
+    <!-- Oitavas - Bo1 -->
     <div class="round">
-      <div class="round-title">Oitavas (Bo3)</div>
-      <div class="match"><div class="team winner">Team A <span class="score">2</span></div><div class="team">Team B <span class="score">0</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team C <span class="score">1</span></div><div class="team winner">Team D <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team E <span class="score">0</span></div><div class="team winner">Team F <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team winner">Team G <span class="score">2</span></div><div class="team">Team H <span class="score">1</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team winner">Team I <span class="score">2</span></div><div class="team">Team J <span class="score">0</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team K <span class="score">1</span></div><div class="team winner">Team L <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team winner">Team M <span class="score">2</span></div><div class="team">Team N <span class="score">1</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team O <span class="score">2</span></div><div class="team winner">Team P <span class="score">3</span></div><div class="bestof">Best of 3</div></div>
-    </div>
-
-    <!-- QUARTAS -->
-    <div class="round">
-      <div class="round-title">Quartas (Bo3)</div>
-      <div class="match"><div class="team winner">Team A <span class="score">2</span></div><div class="team">Team D <span class="score">0</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team F <span class="score">1</span></div><div class="team winner">Team G <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team winner">Team I <span class="score">2</span></div><div class="team">Team L <span class="score">1</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team M <span class="score">0</span></div><div class="team winner">Team P <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-    </div>
-
-    <!-- SEMIFINAL -->
-    <div class="round">
-      <div class="round-title">Semifinal (Bo3)</div>
-      <div class="match"><div class="team winner">Team A <span class="score">2</span></div><div class="team">Team G <span class="score">1</span></div><div class="bestof">Best of 3</div></div>
-      <div class="match"><div class="team">Team I <span class="score">0</span></div><div class="team winner">Team P <span class="score">2</span></div><div class="bestof">Best of 3</div></div>
-    </div>
-
-    <!-- FINAL -->
-    <div class="round final">
-      <div class="round-title">Grande Final (Bo5)</div>
+      <div class="round-title">Oitavas (Bo1)</div>
       <div class="match">
-        <div class="team">Team A <span class="score">2</span></div>
-        <div class="team winner">Team P <span class="score">3</span></div>
-        <div class="bestof">Best of 5</div>
+        <div class="team winner">Team A <span class="score">1</span></div>
+        <div class="team">Team B <span class="score">0</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team">Team C <span class="score">0</span></div>
+        <div class="team winner">Team D <span class="score">1</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team">Team E <span class="score">0</span></div>
+        <div class="team winner">Team F <span class="score">1</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team winner">Team G <span class="score">1</span></div>
+        <div class="team">Team H <span class="score">0</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team winner">Team I <span class="score">1</span></div>
+        <div class="team">Team J <span class="score">0</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team">Team K <span class="score">0</span></div>
+        <div class="team winner">Team L <span class="score">1</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team">Team M <span class="score">0</span></div>
+        <div class="team winner">Team N <span class="score">1</span></div>
+        <div class="bestof">Best of 1</div>
+      </div>
+      <div class="match">
+        <div class="team winner">Team O <span class="score">1</span></div>
+        <div class="team">Team P <span class="score">0</span></div>
+        <div class="bestof">Best of 1</div>
       </div>
     </div>
 
+    <!-- Quartas - Bo3 -->
+    <div class="round">
+      <div class="round-title">Quartas (Bo3)</div>
+      <div class="match">
+        <div class="team winner">Team A <span class="score">2</span></div>
+        <div class="team">Team D <span class="score">0</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+      <div class="match">
+        <div class="team">Team F <span class="score">1</span></div>
+        <div class="team winner">Team G <span class="score">2</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+      <div class="match">
+        <div class="team">Team I <span class="score">0</span></div>
+        <div class="team winner">Team L <span class="score">2</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+      <div class="match">
+        <div class="team winner">Team N <span class="score">2</span></div>
+        <div class="team">Team O <span class="score">1</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+    </div>
+
+    <!-- Semifinais - Bo3 -->
+    <div class="round">
+      <div class="round-title">Semifinal (Bo3)</div>
+      <div class="match">
+        <div class="team winner">Team A <span class="score">2</span></div>
+        <div class="team">Team G <span class="score">1</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+      <div class="match">
+        <div class="team">Team L <span class="score">0</span></div>
+        <div class="team winner">Team N <span class="score">2</span></div>
+        <div class="bestof">Best of 3</div>
+      </div>
+    </div>
+
+    <!-- Final - Bo5 -->
+    <div class="round">
+      <div class="round-title">Grande Final (Bo5)</div>
+      <div class="match">
+        <div class="team">Team A <span class="score">2</span></div>
+        <div class="team winner champion">Team N <span class="score">3</span></div>
+        <div class="bestof">Best of 5</div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
